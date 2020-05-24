@@ -265,13 +265,19 @@ router.get('/getHistory', auth, (req, res) => {
 })
 
 
-router.post("/getWishlist ", auth, (req, res) => {
+router.get("/getWishlist", auth, (req, res) => {
+    User.find({ _id: req.user.id }
+        , (err, userInfo) => {
+            let wishlist = userInfo[0].wishlist;
+            let array = wishlist.map(item => {
+                return item.id
+            })
 
-    //get the datas saved by user from the BD
-    Product.find()
-        .exec((err, products) => {
-            if (err) return res.status(400).json({ success: false, err })
-            res.status(200).json({ success: true, products })
+            Product.find({ '_id': { $in: array } })
+                .exec((err, products) => {
+                    if (err) return res.status(400).json({ success: false, err })
+                    res.status(200).json({ success: true, products })
+                })
         })
 
 });
@@ -281,15 +287,14 @@ router.post("/addToWishlist", auth, (req, res) => {
 
     User.find({ _id: req.user._id }
         , (err, userInfo) => {
-
             let duplicate = false;
-            if (userInfo.wishlist) {
-                userInfo.wishlist.forEach((wishlistInfo) => {
-                    if (wishlistInfo.id == req.query.productId) {
-                        duplicate = true;
-                    }
-                })
-            }
+
+            userInfo[0].wishlist.forEach((wishlistInfo) => {
+                if (wishlistInfo.id == req.query.productId) {
+                    duplicate = true;
+                }
+            })
+
             if (duplicate) {
                 User.findOneAndUpdate(
                     { _id: req.user._id, "wishlist.id": req.query.productId },

@@ -2,21 +2,19 @@ import React, { useState } from 'react'
 import { Icon, Col, Card, Row } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
 
-
-
 const { Meta } = Card;
 
 function WishlistPage(props) {
-    
-    const [Products, setProduct] = useState([])
+    console.log(props);
 
-    const renderCards = Products.map((product, index) => {
+    const renderCards = props.detail.map((product, index) => {
+
 
         return <Col lg={6} md={8} xs={24}>
             <Card
                 hoverable={true}
                 cover={<a href={`/product/${product._id}`} > <ImageSlider images={product.images} /></a>}
-            > 
+            >
                 <Meta
                     title={product.title}
                     description={`$${product.price}`}
@@ -34,13 +32,13 @@ function WishlistPage(props) {
 
 
 
-            {Products.length === 0 ?
+            {props.detail.length === 0 ?
                 <div style={{ display: 'flex', height: '300px', justifyContent: 'center', alignItems: 'center' }}>
                     <h2>No items saved yet...</h2>
                 </div> :
                 <div>
                     <Row gutter={[16, 16]}>
-                        
+
                         {renderCards}
 
                     </Row>
