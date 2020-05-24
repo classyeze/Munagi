@@ -24,7 +24,7 @@ router.get("/auth", auth, (req, res) => {
         cart: req.user.cart,
         history: req.user.history,
         wishlist: req.user.wishlist
-    }); 
+    });
 });
 
 router.post("/register", (req, res) => {
@@ -265,15 +265,15 @@ router.get('/getHistory', auth, (req, res) => {
 })
 
 
-router.post("/getWishlist ", auth, (req, res) => { 
+router.post("/getWishlist ", auth, (req, res) => {
 
     //get the datas saved by user from the BD
     Product.find()
         .exec((err, products) => {
             if (err) return res.status(400).json({ success: false, err })
             res.status(200).json({ success: true, products })
-    }) 
- 
+        })
+
 });
 
 
@@ -283,49 +283,49 @@ router.post("/addToWishlist", auth, (req, res) => {
         , (err, userInfo) => {
 
             let duplicate = false;
-        
-        userInfo.wishlist.forEach((wishlistInfo) => {
-            if (wishlistInfo.id == req.query.productId) {
-                duplicate = true;
-            }
-        })
-
-        if (duplicate) {
-            User.findOneAndUpdate(
-                { _id: req.user._id, "wishlist.id": req.query.productId },
-                { $inc: { "wishlist.$.quantity": 1 } },
-                { new: true },
-                (err, userInfo) => {
-                    if (err) return res.json({ success: false, err });
-                    res.status(200).json(userInfo.wishlist)
-                }
-            )
-        } else {
-            User.findOneAndUpdate(
-                { _id: req.user._id },
-                {
-                    $push: {
-                        wishlist: {
-                            id: req.query.productId,
-                            quantity: 1,
-                            date: Date 
-                        }
+            if (userInfo.wishlist) {
+                userInfo.wishlist.forEach((wishlistInfo) => {
+                    if (wishlistInfo.id == req.query.productId) {
+                        duplicate = true;
                     }
-                },
-                { new: true },
-                (err, userInfo) => {
-                    if (err) return res.json({ success: false, err });
-                    res.status(200).json(userInfo.wishlist)
-                } 
-            )
-        }
+                })
+            }
+            if (duplicate) {
+                User.findOneAndUpdate(
+                    { _id: req.user._id, "wishlist.id": req.query.productId },
+                    { $inc: { "wishlist.$.quantity": 1 } },
+                    { new: true },
+                    (err, userInfo) => {
+                        if (err) return res.json({ success: false, err });
+                        res.status(200).json(userInfo.wishlist)
+                    }
+                )
+            } else {
+                User.findOneAndUpdate(
+                    { _id: req.user._id },
+                    {
+                        $push: {
+                            wishlist: {
+                                id: req.query.productId,
+                                quantity: 1,
+                                date: Date
+                            }
+                        }
+                    },
+                    { new: true },
+                    (err, userInfo) => {
+                        if (err) return res.json({ success: false, err });
+                        res.status(200).json(userInfo.wishlist)
+                    }
+                )
+            }
 
 
 
 
 
 
-    })
+        })
 
 })
 

@@ -5,13 +5,15 @@ import 'antd/dist/antd.css';
 import ImageSlider from '../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
+import { addToWishlist } from '../../../_actions/user_actions';
 import { continents, price } from './Sections/Datas';
 import SearchFeature from './Sections/SearchFeature';
+import { useDispatch } from 'react-redux';
 
 const { Meta } = Card;
 
 function LandingPage(props) {
-
+    const dispatch = useDispatch();
     const [Products, setProducts] = useState([])
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(8)
@@ -64,9 +66,8 @@ function LandingPage(props) {
         setSkip(skip)
     }
 
-
-    const addToWishlisthandler = (event) => {
-         
+    const addToWishlisthandler = (productId) => {
+        dispatch(addToWishlist(productId));
     }
 
     const renderCards = Products.map((product, index) => {
@@ -81,14 +82,14 @@ function LandingPage(props) {
                     description={`$${product.price}`}
                 />
 
-               <Button  type="" shape="circle" style={{marginTop: 15, float: 'right', bottom: 61, textAlign: 'center'}}
-                onClick={addToWishlisthandler}
-                
-               >
-               
-               <Icon type="heart" style={{fontSize: 21, textAlign: 'center', marginTop: 4 }} />
+                <Button type="" shape="circle" style={{ marginTop: 15, float: 'right', bottom: 61, textAlign: 'center' }}
+                    onClick={() => { addToWishlisthandler(product._id) }}
 
-               </Button>
+                >
+
+                    <Icon type="heart" style={{ fontSize: 21, textAlign: 'center', marginTop: 4 }} />
+
+                </Button>
 
             </Card>
         </Col>
@@ -199,7 +200,7 @@ function LandingPage(props) {
                     <Row gutter={[16, 16]}>
 
                         {renderCards}
-                        
+
 
                     </Row>
 

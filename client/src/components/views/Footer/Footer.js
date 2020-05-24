@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Divider, Icon } from 'antd';
+import { Row, Col, Divider } from 'antd';
 import 'antd/dist/antd.css';
 
   
@@ -59,12 +59,12 @@ function Footer() {
         
 
                         <Col className="gutter-row" span={6}>
-                            <div>
+                            {/* <div>
                                 <Icon type="facebook" style={{ fontSize: 25 }} /> &nbsp; &nbsp;
                                 <Icon type="twitter" style={{ fontSize: 25 }} />  &nbsp; &nbsp;
                                 <Icon type="instagram" style={{ fontSize: 25 }} /> &nbsp; &nbsp;
                                 <Icon type="youtube" style={{ fontSize: 25 }} /> &nbsp; &nbsp;
-                            </div>
+                            </div> */}
                         </Col>
                         <Col className="gutter-row" span={6}>
                             <div style={style}>Teams & Ideas</div>
