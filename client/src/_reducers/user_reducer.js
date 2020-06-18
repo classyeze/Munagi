@@ -9,6 +9,7 @@ import {
   ON_SUCCESS_BUY_USER,
   GET_WISHLIST_ITEMS_USER,
   ADD_TO_WISHLIST_USER,
+  DELETE_WISHLIST_USER
 } from "../_actions/types";
 
 export default function (state = {}, action) {
@@ -60,6 +61,12 @@ export default function (state = {}, action) {
       };
 
     case ADD_TO_WISHLIST_USER:
+      return { ...state, userData: {
+        ...state.userData,
+        wishlist: action.payload,
+      },};
+
+    case DELETE_WISHLIST_USER:
       return { ...state, userData: {
         ...state.userData,
         wishlist: action.payload,

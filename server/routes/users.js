@@ -324,14 +324,78 @@ router.post("/addToWishlist", auth, (req, res) => {
                     }
                 )
             }
-
-
-
-
-
-
         })
 
 })
+
+
+router.get("/deleteWishlist", auth, (req, res) => {
+
+    User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+            "$pull":
+                { "wishlist": { "id": req.query._id } }
+        },
+        { new: true },
+        (err, userInfo) => {
+            let wishlist = userInfo.wishlist;
+            let array = wishlist.map(item => {
+                return item.id
+            })
+
+            Product.find({ '_id': { $in: array } })
+            .exec((err, wishlist) => {
+                if (err) return res.status(400).json({ success: false, err })
+                res.status(200).json({ success: true, wishlist })
+            })
+
+        }
+    )
+
+});
+
+//OR
+
+
+router.delete("/deleteWishlist", auth, (req, res) => {
+
+    User.find({ _id: req.user._id }
+        , (err, userInfo) => {
+            
+            userInfo[0].wishlist.forEach((wishlistInfo) => {
+                if (wishlistInfo.id == req.query.productId) {
+                    duplicate = true;
+                }
+            })
+
+        User.update(
+                    // { _id: req.user._id, },
+                    { _id: req.user._id, "wishlist.id": req.query.productId },          
+                    // { $pull: { "wishlist" : { id: req.query.productId } } },
+                    { $pull: { "wishlist" : { "id": "5ec1ce66e1b274322898ea0e" } } },
+                    {new:true},
+
+                    //for mutiple records in an array to remove
+                    // {multi:true},
+
+                (err, userInfo) => {
+                    userInfo[0].wishlist.forEach((wishlistInfo) => {
+                        if (wishlistInfo.id == req.query.productId) {
+                            duplicate = true;
+                        }
+                    })
+
+                Product.find({ '_id': { $in: array } })
+                    .exec((err, products) => {
+                        if (err) return res.status(400).json({ success: false, err })
+                        res.status(200).json({ success: true, products })
+                    })
+            })
+
+    })
+
+});
+
 
 module.exports = router;

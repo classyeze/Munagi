@@ -27,12 +27,12 @@ function WishlistPage(props) {
                     title={product.title}
                     description={`$${product.price}`}
                 />
-                 <Button type="" shape="circle" style={{ marginTop: 15, float: 'right', bottom: 430, textAlign: 'center', left: 18 }}
+                 <Button type="" shape="circle" style={{ marginTop: 15, float: 'right', bottom: 430, textAlign: 'center', left: 18, backgroundColor: '#333030'}}
                     onClick={() => { deleteWishlishHandler() }}
 
                 >
 
-                    <Icon type="delete" style={{ fontSize: 21, textAlign: 'center', marginTop: 4 }} />
+                    <Icon type="delete" style={{ fontSize: 21, textAlign: 'center', marginTop: 4, color: 'white'}} />
 
                 </Button>
             </Card>

@@ -161,10 +161,10 @@ export function addToWishlist(_id) {
 }
 
 export function deleteWishlist(_id) {
-    const request = axios.delete(`${USER_SERVER}/addToWishlist?productId=${_id}`)
+    const request = axios.get(`${USER_SERVER}/deleteWishlist?productId=${_id}`,)
     .then(response => response.data);
 
-        return { 
+        return {
         type: DELETE_WISHLIST_USER,
         payload: request
     }
