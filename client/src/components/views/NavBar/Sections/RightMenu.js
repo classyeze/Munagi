@@ -6,6 +6,9 @@ import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
 function RightMenu(props) {
   const user = useSelector(state => state.user)
 
@@ -22,12 +25,36 @@ function RightMenu(props) {
   if (user.userData && !user.userData.isAuth) {
     return (
       <Menu mode={props.mode}>
-        <Menu.Item key="mail">
-          <a href="/login">Signin</a>
+
+        <SubMenu  key="user" style={{ top: 8 }} title={<span><Icon type="user" style={{ fontSize: 30, marginBottom: 3, color:'#667777' }} /></span>}>
+        <MenuItemGroup >
+          <Menu.Item key="mail">
+            <a href="/login"> LOG IN</a>
+          </Menu.Item>
+
+          <Menu.Item key="app">
+            <a href="/register">SIGN UP</a>
+          </Menu.Item>
+        </MenuItemGroup>
+        </SubMenu>
+
+
+        <Menu.Item key="cart" style={{ paddingBottom: 3 }}>
+          <Badge >
+            <a href="/user/cart" style={{ color:'#667777'}}>
+              <Icon type="shopping-cart" style={{ fontSize: 30, marginBottom: 3 }} />
+            </a>
+          </Badge>
         </Menu.Item>
-        <Menu.Item key="app">
-          <a href="/register">Signup</a>
+
+        <Menu.Item key="wishlist" style={{ paddingBottom: 3 }}>
+          <Badge >
+            <a href="/user/wishlist" style={{ color:'#667777'}}>
+                <Icon type="heart" style={{ fontSize: 30, marginBottom: 3 }} />
+              </a>
+          </Badge>
         </Menu.Item>
+        
       </Menu>
     )
   } else {
@@ -69,6 +96,7 @@ function RightMenu(props) {
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>
         </Menu.Item>
+
       </Menu>
     )
   }

@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
 import { Icon, Col, Card, Row, Button } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
-import { deleteWishlist } from '../../../_actions/user_actions'
-import { useDispatch } from 'react-redux';
 
 const { Meta } = Card;
 
 function WishlistPage(props) {
     console.log(props);
 
-    const dispatch = useDispatch();
-
-    const deleteWishlishHandler = () => {
-        dispatch(deleteWishlist());
-    }
-
     const renderCards = props.detail.map((product, index) => {
-
-
+        
         return <Col lg={6} md={8} xs={24}>
             <Card
+                key={index}
                 hoverable={true}
                 cover={<a href={`/product/${product._id}`} > <ImageSlider images={product.images} /></a>}
             >
@@ -28,7 +20,7 @@ function WishlistPage(props) {
                     description={`$${product.price}`}
                 />
                  <Button type="" shape="circle" style={{ marginTop: 15, float: 'right', bottom: 430, textAlign: 'center', left: 18, backgroundColor: '#333030'}}
-                    onClick={() => { deleteWishlishHandler() }}
+                    onClick={() => { props.deleteWishlistHandler(product._id) }} 
 
                 >
 

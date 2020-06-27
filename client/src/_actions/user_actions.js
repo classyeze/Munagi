@@ -132,7 +132,7 @@ export function getWishlistItems(WishlistItems, userWishlist) {
     const request = axios.get(`api/product/products_by_id?id=${WishlistItems}&type=array`)
         .then(response => {
 
-    // make wishlist imside redux store
+    // make wishlist inside redux store
 
         userWishlist.forEach(wishlistItem =>{
                 response.data.forEach((productDetail, i) => {
@@ -161,7 +161,7 @@ export function addToWishlist(_id) {
 }
 
 export function deleteWishlist(_id) {
-    const request = axios.get(`${USER_SERVER}/deleteWishlist?productId=${_id}`,)
+    const request = axios.delete(`${USER_SERVER}/deleteWishlist?productId=${_id}`)
     .then(response => response.data);
 
         return {

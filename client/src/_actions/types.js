@@ -8,4 +8,4 @@ export const REMOVE_CART_ITEM_USER = 'remove_cart_item_user';
 export const ON_SUCCESS_BUY_USER = 'on_success_buy_user';
 export const GET_WISHLIST_ITEMS_USER = 'get_wishlist_item_user';
 export const ADD_TO_WISHLIST_USER = 'add_to_wishlist_user';
-export const DELETE_WISHLIST_USER= 'add_to_wishlist_user';
+export const DELETE_WISHLIST_USER= 'delete_wishlist_user';

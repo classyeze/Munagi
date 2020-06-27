@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import WishlistPage from './wishlistPage'
-import { addToWishlist } from '../../../_actions/user_actions'
+import { deleteWishlist } from "../../../_actions/user_actions";
 import { useDispatch } from 'react-redux';
 import Axios from 'axios';
-
+ 
 
 function MainwishlistPage() {
 
@@ -48,18 +48,19 @@ function MainwishlistPage() {
             limit: Limit,
             loadMore: true,
         }
-        getProducts(variables)
+        getProducts(variables) 
         setSkip(skip)
     }
 
-    const addToWishlistHandler = (productId) => {
-        dispatch(addToWishlist(productId))
-    }
+    const deleteWishlistHandler = (productId) => {
+        dispatch(deleteWishlist(productId));
+      };
 
+    
     return (
         <div>
             <WishlistPage
-                addToWishlist={addToWishlistHandler}
+                deleteWishlistHandler={deleteWishlistHandler}
                 detail={Products} 
                 onLoadMore={onLoadMore}
             />
